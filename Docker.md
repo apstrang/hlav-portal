@@ -1,15 +1,16 @@
 <h1>CONCEPTS</h1>
 <h2>NETWORKING</h2>
 - Docker utilizes either the `host` network, or a custom (internal) network that is isolated from the host.<br>
-- **HOST**<br>
+- <h3>HOST</h3><br>
 	- Containers running on the `host` network utilize the host's IP address and available ports.<br>
 	- Generally speaking, utilizing the `host` network mode is unadvised.<br>
-- **CUSTOM (BRIDGE)**<br>
+- <h3>CUSTOM(INTERNAL)</h3><br>
 	- A custom network can be created with the following command:<br>
 		- `docker network create -d bridge <network>`<br>
 		- The above syntax creates a network using the default `bridge` driver.<br>
 	- Containers running on a custom network are bridged to the host. This means that services running within the network are accessible internally (container to container) via the container's name.<br>
 	- To expose a service's port on the LAN, utilize the following syntax in your `docker-compose.yml`:<br>
+			
 		- `ports:
 			  `- 3000:3000`
 		- The above syntax binds port 3000 in the container to port 3000 on the host. If port 3000 is not available on the host, you can remap it using the syntax `HOST:APP`.
