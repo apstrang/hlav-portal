@@ -38,34 +38,37 @@
 
 <h2>DOCKERFILES</h2>
 - Now that you've selected an image, the next step is to write a Dockerfile.
+<br>
 - Since we're thinking of the base image as the operating system, the Dockerfile contains the instructions for the base image to run on startup to install additional packages, provide source code, etc. We configure our "operating system" with the Dockerfile.
+<br>
 - Here is a sample Dockerfile: 
-`	  FROM python:3.10-slim
+	
+	`FROM python:3.10-slim`
 	  
-	  ENV DEBIAN_FRONTEND=noninteractive
-	  WORKDIR /app
+	ENV DEBIAN_FRONTEND=noninteractive
+	WORKDIR /app
 	  
-	 RUN apt-get update && apt-get install -y \
-		  curl wget gnupg unzip xauth xvfb x11vnc fluxbox \
-		  chromium x11-utils net-tools fonts-liberation \
-		  && apt-get clean \
-		  && rm -rf /var/lib/apt/lists/*
+	RUN apt-get update && apt-get install -y \
+		curl wget gnupg unzip xauth xvfb x11vnc fluxbox \
+		chromium x11-utils net-tools fonts-liberation \
+		&& apt-get clean \
+		&& rm -rf /var/lib/apt/lists/*
 		  
-	 RUN pip install --no-cache-dir playwright && \
-		 playwright install chromium
+	RUN pip install --no-cache-dir playwright && \
+		playwright install chromium
 		 
-	 COPY requirements.txt .
+	COPY requirements.txt .
 	 
-	 RUN pip install --no-cache-dir -r requirements.txt
+	RUN pip install --no-cache-dir -r requirements.txt
 	 
-	 COPY . .
+	COPY . .
 	 
-	 CMD bash -c "\
-		 Xvfb :99 -screen 0 1920x1080x24 & \
-		 x11vnc -display :99 -forever -nopw -shared & \
-		 fluxbox & \
-		 export DISPLAY=:99 && \
-		 python app.py"`
+	CMD bash -c "\
+		Xvfb :99 -screen 0 1920x1080x24 & \
+		x11vnc -display :99 -forever -nopw -shared & \
+		fluxbox & \
+		export DISPLAY=:99 && \
+		python app.py"`
 
 - Now let's take things line by line to break down what's going on.
 	- `FROM python:3.10-slim` 
