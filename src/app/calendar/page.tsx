@@ -1,4 +1,3 @@
-import HybridScheduler from "@/components/calendar/Calendar"
 import CreateEvent from "@/components/forms/events/CreateEvent"
 
 export default function Page() {
